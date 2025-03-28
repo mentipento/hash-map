@@ -4,7 +4,7 @@ import LinkedList from "./linked-list.js";
 
 class HashMap {
 
-  constructor(loadFactor = 0.8, capacity = 16) {
+  constructor(loadFactor = 0.8, capacity = 6) {
 
     this.loadFactor = loadFactor;
     this.capacity = capacity;
@@ -26,7 +26,7 @@ class HashMap {
 
   set(key, value) {
     const hashCode = this.hash(key);
-    let bucket = this.array[hashCode];
+    const bucket = this.array[hashCode];
 
     let current = bucket.head;
 
@@ -42,6 +42,70 @@ class HashMap {
     return;
   }
 
+  get(key) {
+    const hashCode = this.hash(key);
+    const bucket = this.array[hashCode];
+
+    let current = bucket.head;
+
+    while (current) {
+      if (current.key === key)
+        return current.value;
+
+      current = current.next;
+    }
+    return null;
+  }
+
+  has(key) {
+    const hashCode = this.hash(key);
+    const bucket = this.array[hashCode];
+
+    let current = bucket.head;
+
+    while (current) {
+      if (current.key === key)
+        return true;
+
+      current = current.next;
+    }
+    return false;
+  }
+
+  remove(key) {
+    const hashCode = this.hash(key);
+    const bucket = this.array[hashCode];
+
+    let current = bucket.head;
+
+    if(!current)
+      return false;
+
+    if (current.key === key) {
+      bucket.removeAt(0);
+      return true;
+    }
+
+    while (current && current.next) {
+      if (current.next.key === key) {
+        current.next = current.next.next;
+        return true;
+      }
+
+      current = current.next;
+    }
+    return false;
+  }
+
+  length() {
+
+  }
+
+  clear() {
+    this.array = Array.from({ length: this.capacity }, () => new LinkedList());
+    return this.array;
+  }
+
 }
 
 
@@ -49,7 +113,11 @@ const newHashMap = new HashMap();
 newHashMap.set('Peter', 'Fox');
 newHashMap.set('Michael', 'Bane');
 newHashMap.set('Ira', 'Leen');
-newHashMap.set('Peter', 'Newman')
+newHashMap.set('Peter', 'Newman');
+newHashMap.set('Marco', 'Polo');
+newHashMap.set('Janice', 'Pearl');
+
 console.log(newHashMap.array);
-console.log(newHashMap.array[0].toString())
+newHashMap.remove('Ira');
+console.log(newHashMap.clear())
 

@@ -98,7 +98,10 @@ class HashMap {
   }
 
   length() {
-
+    return this.array.reduce((acc, cur) => {
+      acc += cur.size();
+      return acc;
+    }, 0)
   }
 
   clear() {
@@ -106,6 +109,44 @@ class HashMap {
     return this.array;
   }
 
+  keys() {
+    return this.array.reduce((acc, bucket) => {
+      let current = bucket.head;
+
+      while(current) {
+        acc.push(current.key);
+        current = current.next;
+      }
+
+    return acc;
+    }, [])
+  }
+
+  values() {
+    return this.array.reduce((acc, bucket) => {
+      let current = bucket.head;
+
+      while(current) {
+        acc.push(current.value);
+        current = current.next;
+      }
+
+    return acc;
+    }, [])
+  }
+
+  entries() {
+    return this.array.reduce((acc, bucket) => {
+      let current = bucket.head;
+
+      while(current) {
+        acc.push([current.key, current.value]);
+        current = current.next;
+      }
+
+    return acc;
+    }, [])
+  }
 }
 
 
@@ -117,7 +158,7 @@ newHashMap.set('Peter', 'Newman');
 newHashMap.set('Marco', 'Polo');
 newHashMap.set('Janice', 'Pearl');
 
-console.log(newHashMap.array);
-newHashMap.remove('Ira');
-console.log(newHashMap.clear())
+
+console.log(newHashMap.entries());
+
 

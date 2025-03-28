@@ -30,9 +30,9 @@ export default class LinkedList {
       current.next = newNode;
     }
 
-  prepend(value) {
+  prepend(key, value) {
 
-    const newNode = new Node(value);
+    const newNode = new Node(key, value);
 
     if (!this.head) {
       this.head = newNode;
